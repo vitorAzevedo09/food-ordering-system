@@ -26,7 +26,44 @@ public class Order extends AggregateRoot<OrderId> {
 
   private TrackingId trackingId;
   private OrderStatus orderStatus;
-  private List<String> failureMessage;
+  private List<String> failureMessages;
+
+  public void pay() {
+    if (orderStatus != OrderStatus.PENDING) {
+      throw new OrderDomainException("Order is not in correct state for pay operation");
+    }
+    orderStatus = OrderStatus.PAID;
+  }
+
+  public void approve() {
+    if (orderStatus != OrderStatus.PAID) {
+      throw new OrderDomainException("Order is not in correct state for approve operation");
+    }
+    orderStatus = OrderStatus.APPROVED;
+  }
+
+  public void initCancel(List<String> failureMessages) {
+    if (orderStatus != OrderStatus.PAID) {
+      throw new OrderDomainException("Order is not in correct state for initCancel operation");
+    }
+    orderStatus = OrderStatus.CANCELLING;
+    updateFailureMessages(failureMessages);
+  }
+
+  public void cancel() {
+    if (orderStatus == OrderStatus.CANCELLING || orderStatus == OrderStatus.PENDING) {
+      throw new OrderDomainException("Order is not in correct state for cancel operation");
+    }
+  }
+
+  public void updateFailureMessages(List<String> failureMessages) {
+    if (this.failureMessages != null && failureMessages != null) {
+      this.failureMessages.addAll(failureMessages.stream().filter(message -> !message.isEmpty()).toList());
+    }
+    if (this.failureMessages == null) {
+      this.failureMessages = failureMessages;
+    }
+  }
 
   public void validateOrder() {
     validateInitialOrder();
@@ -88,7 +125,11 @@ public class Order extends AggregateRoot<OrderId> {
     this.items = builder.items;
     this.trackingId = builder.trackingId;
     this.orderStatus = builder.orderStatus;
-    this.failureMessage = builder.failureMessage;
+    this.failureMessages = builder.failureMessages;
+  }
+
+  public Builder builder() {
+    return new Builder();
   }
 
   public static class Builder {
@@ -101,7 +142,7 @@ public class Order extends AggregateRoot<OrderId> {
 
     private TrackingId trackingId;
     private OrderStatus orderStatus;
-    private List<String> failureMessage;
+    private List<String> failureMessages;
 
     public Builder orderId(OrderId orderId) {
       this.orderId = orderId;
@@ -143,8 +184,8 @@ public class Order extends AggregateRoot<OrderId> {
       return this;
     }
 
-    public Builder failureMessage(List<String> failureMessage) {
-      this.failureMessage = failureMessage;
+    public Builder failureMessages(List<String> failureMessages) {
+      this.failureMessages = failureMessages;
       return this;
     }
 
@@ -182,7 +223,7 @@ public class Order extends AggregateRoot<OrderId> {
   }
 
   public List<String> getFailureMessage() {
-    return failureMessage;
+    return failureMessages;
   }
 
 }
