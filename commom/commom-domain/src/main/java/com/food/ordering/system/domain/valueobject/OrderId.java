@@ -6,8 +6,8 @@ import java.util.UUID;
  * OrderId
  */
 public class OrderId extends BaseId<UUID> {
-
-  OrderId(UUID value) {
+  
+  public OrderId(UUID value) {
     super(value);
   }
 

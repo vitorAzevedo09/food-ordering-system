@@ -6,8 +6,6 @@ Welcome to the Food Ordering System project! This project is a comprehensive exa
 
 - **Project Name:** Food Ordering System
 - **Architecture and Technologies:** Spring Boot microservices, Clean & Hexagonal architectures, DDD, SAGA, Outbox, CQRS, Kafka, Kubernetes, Google Kubernetes Engine (GKE)
-- **Author:** [Your Name]
-- **License:** [License Name] (Specify the project's license)
 
 ## Project Structure
 
@@ -42,7 +40,7 @@ The Food Ordering System project showcases various features and best practices:
 
 Before running the Food Ordering System, ensure that you have the following prerequisites:
 
-- Java Development Kit (JDK) 11 or higher
+- Java Development Kit (JDK) 17 or higher
 - Apache Maven
 - Docker (for running containers)
 - A Kubernetes cluster or Google Kubernetes Engine (GKE) for deployment
