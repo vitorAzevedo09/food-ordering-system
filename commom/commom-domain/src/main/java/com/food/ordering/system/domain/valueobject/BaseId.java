@@ -12,7 +12,7 @@ public class BaseId<T> {
     return value;
   }
 
-  BaseId(T value) {
+  public BaseId(T value) {
     this.value = value;
   }
 
