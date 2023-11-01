@@ -7,7 +7,7 @@
 
   <modules>
     <module>order-service</module>
-    <module>commom</module>
+    <module>common</module>
   </modules>
 
   <parent>
@@ -56,12 +56,12 @@
       </dependency>
       <dependency>
         <groupId>com.food.ordering.system</groupId>
-        <artifactId>commom</artifactId>
+        <artifactId>common</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>com.food.ordering.system</groupId>
-        <artifactId>commom-domain</artifactId>
+        <artifactId>common-domain</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
